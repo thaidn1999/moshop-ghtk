@@ -14,10 +14,6 @@ import TestComponent from "./components/TestComponent.vue";
       </nav>
     </div>
   </header>
-  <div>
-    <p>Thais</p>
-  </div>
-
   <RouterView />
 </template>
 
