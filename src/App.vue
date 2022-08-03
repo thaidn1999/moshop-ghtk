@@ -11,7 +11,6 @@ import TestComponent from "./components/TestComponent.vue";
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <div><p>thang</p></div>
       </nav>
     </div>
   </header>
