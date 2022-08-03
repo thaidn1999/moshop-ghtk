@@ -1,9 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import Test from "./components/TestComponent.vue";
+import TestComponent from "./components/TestComponent.vue";
 </script>
 
 <template>
   <header>
+    <TestComponent />
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -11,6 +14,9 @@ import { RouterLink, RouterView } from "vue-router";
       </nav>
     </div>
   </header>
+  <div>
+    <p>Thais</p>
+  </div>
 
   <RouterView />
 </template>
