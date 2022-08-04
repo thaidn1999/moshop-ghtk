@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  min-height: 100vh;
+  font-size: 14px;
+  color: #212529;
+  background-color: #fff;
+  line-height: 1.6;
+  font-family: "Roboto", Helvetica, Arial, "DejaVu Sans", "Liberation Sans",
+    Freesans, sans-serif !important;
+  text-rendering: optimizeLegibility;
+  font-weight: 400;
+}
