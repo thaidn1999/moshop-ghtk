@@ -45,7 +45,6 @@
                   <span class="forget-password text-moshop-color underline pr-1"
                     >Quên mật khẩu?</span
                   >
-<<<<<<< HEAD
                   <span class="eye-off">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +62,6 @@
                       />
                     </svg>
                   </span>
-=======
                   <button class="button" @click="toggleShow">
                     <span class="eye-off" v-if="showPassword">
                       <svg
@@ -104,7 +102,6 @@
                       </svg>
                     </span>
                   </button>
->>>>>>> aa1852dbf9ee9c5ef4d7ddc444f816ad701076ac
                 </div>
               </div>
             </div>
