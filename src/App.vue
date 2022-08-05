@@ -1,19 +1,19 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import Navbar from "./components/Navbar.vue";
+import { RouterView, RouterLink } from "vue-router";
+import Navbar from "./components/header/Navbar.vue";
 </script>
 
 <template>
-  <header>
-    <Navbar />
-    <!-- <div class="wrapper">
-      <div>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </div>
-    </div>
-  --></header>
-  <!-- <RouterView />  -->
+  <div class="wrapper">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100vh;
+}
+</style>
