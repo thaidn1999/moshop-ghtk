@@ -12,7 +12,7 @@ module.exports = {
       'sm': '640px',
       'md': '768px',
       'lg': '1024px',
-      'xl': '1200px',
+      'xl': '1280px',
     },
     colors: {
       'moshop-color': '#069255', // green: background, background-button
@@ -25,6 +25,7 @@ module.exports = {
       "white": "#FFFFFF",
       'red': '#da4838',
       'grey': '#808080',
+      'borderColor-tbl': '#dee2e6'
     },
   },
   plugins: [],
