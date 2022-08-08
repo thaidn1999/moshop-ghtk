@@ -19,6 +19,7 @@ export const useStaffStore = defineStore({
             }
           })
         this.staffs = res.data.data;
+
       } catch (error) {
         console.log(error);
       }
