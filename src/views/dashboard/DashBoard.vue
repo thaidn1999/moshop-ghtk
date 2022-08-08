@@ -1,23 +1,36 @@
 <script setup>
 import Navbar from "../../components/header/Navbar.vue";
-import HeaderPage from "./HeaderPage.vue";
+
 import HeadTable from "./HeadTable.vue";
-import RowTable from "./RowTable.vue";
+import { useStaffStore } from "../../stores/staff";
+
+import { onMounted } from "vue";
+import FilterDate from "../../components/manager_staff/FilterDate.vue";
+import RowTable from "../../components/manager_staff/RowTable.vue";
+const useStaff = useStaffStore();
+
+onMounted(async () => {
+  await useStaff.getStaff();
+});
 </script>
 <template>
   <Navbar />
   <div class="main-content">
     <section class="page">
       <div class="w-full px-[15px]">
-        <HeaderPage />
+        <FilterDate />
         <div class="page-table-staff p-0">
           <div class="table-scroll">
             <table
               class="border-collapse table-auto w-full border border-borderColor-tbl text-base text-center"
             >
               <HeadTable />
-              <tbody class="table-body" v-for="i in 4">
-                <RowTable />
+              <tbody
+                class="table-body"
+                v-for="staff in useStaff.listStaffs"
+                :key="staff.id"
+              >
+                <RowTable :staff="staff" />
               </tbody>
             </table>
           </div>
