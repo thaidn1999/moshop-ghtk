@@ -1,6 +1,11 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { useRouter } from "vue-router";
 import AccountItem from "./AccountItem.vue";
+const router = useRouter();
+const logout = () => {
+  localStorage.removeItem("accessToken");
+  router.go("/login");
+};
 </script>
 <template>
   <div
@@ -126,8 +131,8 @@ import AccountItem from "./AccountItem.vue";
     </div>
 
     <div class="dropdown-item">
-      <RouterLink
-        :to="{ name: 'login' }"
+      <div
+        @click="logout"
         class="w-100 h-100 flex items-center whitespace-nowrap"
       >
         <span class="icon mr-2">
@@ -147,7 +152,7 @@ import AccountItem from "./AccountItem.vue";
           </svg>
         </span>
         Đăng xuất
-      </RouterLink>
+      </div>
     </div>
   </div>
 </template>

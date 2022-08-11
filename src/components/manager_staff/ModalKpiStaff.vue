@@ -1,4 +1,28 @@
-<script setup></script>
+<script setup>
+import { useToast } from "vue-toast-notification";
+import { useStaffStore } from "../../stores/staff";
+const $toast = useToast();
+const emit = defineEmits(["closeModal"]);
+const useStaff = useStaffStore();
+const updateKpi = async () => {
+  await useStaff.updateKpi();
+  if (useStaff.checkStatus) {
+    $toast.open({
+      message: useStaff.messageStatus,
+      type: "success",
+      duration: 3000,
+    });
+  } else {
+    $toast.open({
+      message: useStaff.messageStatus,
+      type: "error",
+      duration: 3000,
+    });
+  }
+
+  emit("closeModal");
+};
+</script>
 <template>
   <div class="modal kpi-picker-modal">
     <div class="modal-dialog modal-dialog-centered">
@@ -23,42 +47,80 @@
               NV Online
             </div>
             <div class="onlineList__item">
-              <input type="radio" value="1" id="all" />
+              <input
+                type="radio"
+                value="all"
+                v-model="useStaff.kpiOnl"
+                id="all"
+              />
               <label for="all">Nhận tất cả hội thoại</label>
             </div>
             <div class="onlineList__item">
-              <input type="radio" id="same" value="2" />
+              <input
+                type="radio"
+                id="same"
+                value="share_work"
+                v-model="useStaff.kpiOnl"
+              />
               <label for="same">Nhận phần hội thoại được chia đều</label>
             </div>
             <div class="onlineList__item">
-              <input type="radio" id="clickFirst" value="3" />
+              <input
+                type="radio"
+                id="clickFirst"
+                value="first_view"
+                v-model="useStaff.kpiOnl"
+              />
               <label for="clickFirst">
                 Nhận phần hội thoại bấm xem trước tiên
               </label>
             </div>
             <div class="onlineList__item">
-              <input type="radio" id="replyFirst" value="4" />
+              <input
+                type="radio"
+                id="replyFirst"
+                value="first_reply"
+                v-model="useStaff.kpiOnl"
+              />
               <label for="replyFirst">
                 Nhận phần hội thoại trả lời trước tiên
               </label>
             </div>
             <div class="onlineList__item">
-              <input type="radio" id="orderFirst" value="5" />
+              <input
+                type="radio"
+                id="orderFirst"
+                value="first_deal"
+                v-model="useStaff.kpiOnl"
+              />
               <label for="orderFirst">
                 Nhận phần hội thoại chốt đơn trước tiên
               </label>
             </div>
           </div>
-          <div class="onlineList px-10 py-[10px]">
+          <div
+            class="onlineList px-10 py-[10px]"
+            v-if="useStaff.kpiOnl != 'all'"
+          >
             <div class="onlineList__title mb-[10px] font-semibold">
               NV Offline
             </div>
             <div class="onlineList__item">
-              <input type="radio" value="1" id="continue" />
+              <input
+                type="radio"
+                value="keep"
+                v-model="useStaff.kpiOff"
+                id="continue"
+              />
               <label for="continue"> Tiếp tục hội thoại sau khi Offline </label>
             </div>
             <div class="onlineList__item">
-              <input type="radio" value="2" id="redirectOnl" />
+              <input
+                type="radio"
+                value="share"
+                v-model="useStaff.kpiOff"
+                id="redirectOnl"
+              />
               <label for="redirectOnl">
                 Chuyển hội thoại chưa trả lời cho NV Online
               </label>
@@ -67,6 +129,7 @@
         </div>
         <div class="modal-footer">
           <button
+            @click="updateKpi"
             class="py-2 font-semibold text-[18px] text-center bg-moshop-color border border-moshop-color hover:bg-[#218838] hover:border-[#1e7e34] w-full rounded text-white"
           >
             Lưu
@@ -148,7 +211,6 @@
 .onlineList__item input[type="radio"] {
   width: 17px;
   height: 17px;
-  /* border: 1px solid #069255; */
   accent-color: #069255;
 }
 .onlineList__item label {
