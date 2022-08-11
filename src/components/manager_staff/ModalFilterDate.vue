@@ -1,3 +1,9 @@
+<script setup>
+import Datepicker from "vue3-datepicker";
+import { ref } from "vue";
+const dateTo = ref(new Date());
+const dateFrom = ref(new Date());
+</script>
 <template>
   <div>
     <div class="modal date-picker-modal">
@@ -11,12 +17,11 @@
           <div class="modal-body">
             <div class="mx-datepicker">
               <div class="mx-input-wrapper relative">
-                <input
-                  name="date"
-                  type="text"
-                  autocomplete="off"
+                <Datepicker
+                  v-model="dateTo"
+                  :typeable="true"
                   placeholder="Chọn ngày bắt đầu"
-                  class="mx-input"
+                  class="w-full h-[34px] py-[6px] pl-[10px] pr-[30px] rounded border border-[#ccc] shadow-md focus:outline-none focus:border-[#409aff] hover:border-[#409aff]"
                 />
                 <i class="mx-icon-calendar">
                   <svg
@@ -34,12 +39,11 @@
             </div>
             <div class="mx-datepicker">
               <div class="mx-input-wrapper">
-                <input
-                  name="date"
-                  type="text"
-                  autocomplete="off"
+                <Datepicker
+                  v-model="dateFrom"
+                  :typeable="true"
                   placeholder="Chọn ngày kết thúc"
-                  class="mx-input"
+                  class="w-full h-[34px] py-[6px] pl-[10px] pr-[30px] rounded border border-[#ccc] shadow-md focus:outline-none focus:border-[#409aff] hover:border-[#409aff]"
                 />
                 <i class="mx-icon-calendar">
                   <svg
@@ -61,7 +65,7 @@
               <button
                 @click="$emit('closeFilter')"
                 type="button"
-                class="bg-moshop-color border-moshop-color text-white w-[70%] text-sm rounded-[0.25rem] opacity-60 py-[0.375rem] px-[0.75rem]"
+                class="bg-moshop-color border-moshop-color text-white w-[70%] text-sm rounded-[0.25rem] py-[0.375rem] px-[0.75rem]"
               >
                 Xác nhận
               </button>
@@ -145,25 +149,6 @@
   position: relative;
   display: inline-block;
   width: 210px;
-}
-.mx-input {
-  display: inline-block;
-  box-sizing: border-box;
-  width: 100%;
-  height: 34px;
-  padding: 6px 30px 6px 10px;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #555;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-}
-.mx-input:hover,
-.mx-input:focus {
-  outline: none;
-  border-color: #409aff;
 }
 .mx-icon-calendar {
   position: absolute;

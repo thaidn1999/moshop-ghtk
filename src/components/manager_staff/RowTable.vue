@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from "vue";
 import StaffTable from "./StaffTable.vue";
 const props = defineProps(["staff"]);
 const propsStaff = props.staff;

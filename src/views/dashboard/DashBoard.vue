@@ -1,14 +1,11 @@
 <script setup>
-import Navbar from "../../components/header/Navbar.vue";
-
-import HeadTable from "./HeadTable.vue";
 import { useStaffStore } from "../../stores/staff";
-
 import { onMounted } from "vue";
+import Navbar from "../../components/header/Navbar.vue";
 import FilterDate from "../../components/manager_staff/FilterDate.vue";
 import RowTable from "../../components/manager_staff/RowTable.vue";
+import HeadTable from "./HeadTable.vue";
 const useStaff = useStaffStore();
-
 onMounted(async () => {
   await useStaff.getStaff();
 });
@@ -22,7 +19,7 @@ onMounted(async () => {
         <div class="page-table-staff p-0">
           <div class="table-scroll">
             <table
-              class="border-collapse table-auto w-full border border-borderColor-tbl text-base text-center"
+              class="border-collapse border-t-0 table-auto w-full border border-borderColor-tbl text-base text-center"
             >
               <HeadTable />
               <tbody
@@ -39,7 +36,6 @@ onMounted(async () => {
     </section>
   </div>
 </template>
-
 <style scoped>
 .main-content {
   overflow: auto;

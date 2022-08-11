@@ -3,12 +3,13 @@
   <thead class="table-header h-[50px]">
     <tr>
       <th
-        class="w-[25%] py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        class="w-[25%] py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         Nhân viên
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Số khách nhắn tin, bình luận NV nhận'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">KH tương tác</div>
         <div class="head_sort">
@@ -42,9 +43,9 @@
           </div>
         </div>
       </th>
-
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Số khách nhắn tin, bình luận cho SĐT'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">KH có SĐT</div>
         <div class="head_sort">
@@ -79,7 +80,8 @@
         </div>
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Số khách nhân viên đã gọi'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">KH đã gọi</div>
         <div class="head_sort">
@@ -114,7 +116,8 @@
         </div>
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Số khách NV đã chốt'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">ĐH đã chốt</div>
         <div class="head_sort">
@@ -149,7 +152,8 @@
         </div>
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'ĐH đã chốt / (KH tương tác + KH đã gọi)'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">Tỷ lệ chốt</div>
         <div class="head_sort">
@@ -184,7 +188,8 @@
         </div>
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Số đơn giao thành công của NV'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">ĐH thành công</div>
         <div class="head_sort">
@@ -219,7 +224,8 @@
         </div>
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Số đơn bị hoàn trả của NV'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">ĐH hoàn</div>
         <div class="head_sort">
@@ -254,7 +260,8 @@
         </div>
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Giá trị đơn giao thành công của NV'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">Doanh thu</div>
         <div class="head_sort">
@@ -289,7 +296,8 @@
         </div>
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Phí ship đơn hoàn của NV'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">Phí hoàn</div>
         <div class="head_sort">
@@ -324,7 +332,8 @@
         </div>
       </th>
       <th
-        class="py-[10px] border border-borderColor-tbl sticky top-0 z-50 bg-white text-center pr-5"
+        v-tooltip="'Trung bình thời gian trả lời tin nhắn của NV'"
+        class="py-[10px] border border-borderColor-tbl border-t-0 sticky top-0 z-50 bg-white text-center pr-5"
       >
         <div class="head_name">TG phản hồi TB</div>
         <div class="head_sort">
@@ -361,4 +370,12 @@
     </tr>
   </thead>
 </template>
-<style scoped></style>
+<style scoped>
+th {
+  color: #000;
+  font-weight: 500;
+}
+th:hover {
+  cursor: pointer;
+}
+</style>

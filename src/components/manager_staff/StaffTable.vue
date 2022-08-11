@@ -1,5 +1,9 @@
 <script setup>
 import { ref, reactive } from "vue";
+import { useStaffStore } from "../../stores/staff";
+import { useToast } from "vue-toast-notification";
+const $toast = useToast();
+const useStaff = useStaffStore();
 const isShow = ref(false);
 const props = defineProps(["propsStaff"]);
 const propsStaffInfo = props.propsStaff;
@@ -17,8 +21,14 @@ const screenCheck = reactive({
   sale: "Chats chốt đơn",
   product: "Kho và sản phẩm",
 });
-const changeStatusWorking = (status) => {
+const changeStatusWorking = async (status) => {
   propsStaffInfo.active = status;
+  await useStaff.updateStatus(propsStaffInfo.id, status);
+  $toast.open({
+    message: useStaff.messageStatus,
+    type: "success",
+    duration: 3000,
+  });
   isShow.value = false;
 };
 </script>

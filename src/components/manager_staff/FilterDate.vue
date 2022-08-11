@@ -1,16 +1,28 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import ModalKpiStaff from "./ModalKpiStaff.vue";
 import ModalFilterDate from "./ModalFilterDate.vue";
-
+import { useStaffStore } from "../../stores/staff";
+const useStaff = useStaffStore();
 const isFilterStaff = ref(false);
 const isModalKpiStaff = ref(false);
+const titleBtn = ref("today");
+const getKpiStaff = () => {
+  isModalKpiStaff.value = !isModalKpiStaff.value;
+  useStaff.getKpiStaff();
+};
 const closeFilter = () => {
   isFilterStaff.value = false;
 };
 const closeModal = () => {
   isModalKpiStaff.value = false;
 };
+const handleDate = (title) => {
+  titleBtn.value = title;
+};
+onMounted(() => {
+  setInterval(useStaff.getTimeLive(), 2000);
+});
 </script>
 <template>
   <div
@@ -18,23 +30,46 @@ const closeModal = () => {
   >
     <div class="left-content md:col-span-2">
       <div class="info flex items-center">
-        <h2
-          class="info__title text-[40px] font-bold mr-[26px] mb-2 leading-[1.2]"
-        >
+        <h2 class="info__title text-[40px] font-bold mr-7 mb-2 leading-[1.2]">
           Quản lý nhân viên
         </h2>
-        <div class="live relative italic">
-          <div class="ringring"></div>
+        <div class="live flex justify-center items-center relative italic">
+          <div class="ringring1"></div>
           <div class="circle"></div>
-          <div class="pl-[30px] text-base">Live (cập nhật 09:49)</div>
+          <div class="ringring2"></div>
+        </div>
+        <div class="ml-4 lg:text-base italic">
+          Live (cập nhật {{ useStaff.hour }}:{{ useStaff.minute }} )
         </div>
       </div>
       <div class="option-date">
-        <div class="filter">
-          <button class="btn-filter btn-success">Hôm nay</button>
-          <button class="btn-filter">Tuần này</button>
-          <button class="btn-filter">Tháng này</button>
-          <button class="btn-filter" @click="isFilterStaff = !isFilterStaff">
+        <div class="filter lg:text-base">
+          <button
+            class="btn-filter"
+            :class="titleBtn === 'today' ? 'btn-success' : ''"
+            @click="handleDate('today')"
+          >
+            Hôm nay
+          </button>
+          <button
+            class="btn-filter"
+            :class="titleBtn === 'week' ? 'btn-success' : ''"
+            @click="handleDate('week')"
+          >
+            Tuần này
+          </button>
+          <button
+            class="btn-filter"
+            :class="titleBtn === 'month' ? 'btn-success' : ''"
+            @click="handleDate('month')"
+          >
+            Tháng này
+          </button>
+          <button
+            class="btn-filter"
+            :class="titleBtn === 'option' ? 'btn-success' : ''"
+            @click="handleDate('option'), (isFilterStaff = !isFilterStaff)"
+          >
             Tùy chọn
           </button>
         </div>
@@ -45,7 +80,7 @@ const closeModal = () => {
     </div>
     <div class="action flex flex-col flex-wrap items-end">
       <button
-        @click="isModalKpiStaff = !isModalKpiStaff"
+        @click="getKpiStaff"
         class="btn-filter btn-success btn-utility hover:bg-[#218838] hover:border-[#1e7e34]"
       >
         <svg
@@ -69,7 +104,12 @@ const closeModal = () => {
         </svg>
         <span>KPIs nhân viên</span>
       </button>
-      <ModalKpiStaff v-show="isModalKpiStaff" @closeModal="closeModal" />
+      <ModalKpiStaff
+        v-show="isModalKpiStaff"
+        :kpiOnl="useStaff.kpiOnl"
+        :kpiOff="useStaff.kpiOff"
+        @closeModal="closeModal"
+      />
       <button
         href="/quan-ly-nhan-vien-v2/create"
         class="btn-filter btn-success btn-utility hover:bg-[#218838] hover:border-[#1e7e34]"
@@ -121,31 +161,35 @@ const closeModal = () => {
   background-color: red;
   border-radius: 50%;
   position: absolute;
-  top: 7px;
-  left: 8px;
 }
-.ringring {
+.ringring2 {
   border: 2px solid red;
-  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  animation: pulsate 3s ease-out infinite;
+  opacity: 0;
+}
+.ringring1 {
+  border: 2px solid red;
+  border-radius: 30px;
   height: 18px;
   width: 18px;
   position: absolute;
-  left: 3px;
-  top: 2px;
-  -webkit-animation: pulsate 1s ease-out;
-  -webkit-animation-iteration-count: infinite;
+  animation: pulsate 3s ease-out infinite;
   opacity: 0;
 }
-@-webkit-keyframes pulsate {
+@keyframes pulsate {
   0% {
-    -webkit-transform: scale(0.1, 0.1);
+    transform: scale(0.1, 0.1);
     opacity: 0;
   }
   50% {
     opacity: 1;
   }
   100% {
-    -webkit-transform: scale(1.1, 1.1);
+    transform: scale(1.1, 1.1);
     opacity: 0;
   }
 }

@@ -1,8 +1,44 @@
 <script setup>
+import axios from "axios";
 import { ref, onMounted } from "vue";
-const showPassword = ref(false);
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toast-notification";
+const $toast = useToast();
+const router = useRouter();
+const username = ref("");
 const password = ref("");
+const showPassword = ref(false);
 const autoForcus = ref(null);
+
+const login = async () => {
+  try {
+    const res = await axios.post(
+      "https://x.ghtk.vn/api/fulfilment/auth/login",
+      {
+        username: username.value,
+        password: password.value,
+      }
+    );
+    if (res.data.success === false) {
+      $toast.open({
+        message: res.data.message,
+        type: "error",
+        position: "top",
+      });
+    } else if (res.status === 200) {
+      localStorage.setItem("accessToken", res.data.data.access_token);
+      $toast.open({
+        message: res.data.message,
+        type: "success",
+      });
+      router.go("/");
+      // router.push({ name: "dashboard" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 onMounted(() => {
   autoForcus.value.focus();
 });
@@ -29,8 +65,9 @@ onMounted(() => {
                 </label>
                 <input
                   ref="autoForcus"
+                  v-model="username"
                   type="text"
-                  name="ures"
+                  name="username"
                   placeholder="Nhập tên cửa hàng"
                 />
               </div>
@@ -102,6 +139,7 @@ onMounted(() => {
             </div>
             <div class="section-footer">
               <button
+                @click="login"
                 class="bg-moshop-color text-white w-80 h-10 py-px px-1.5 rounded-md"
               >
                 Đăng nhập

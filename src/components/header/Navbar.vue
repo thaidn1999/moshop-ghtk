@@ -64,7 +64,7 @@ const isShow = ref(false);
             </div>
           </li>
           <li class="ml-4">
-            <a href="/bao-cao" class="item-link">
+            <a href="/bao-cao" v-tooltip="'Báo cáo'" class="item-link">
               <svg
                 fill="none"
                 height="25"
@@ -99,7 +99,11 @@ const isShow = ref(false);
             </a>
           </li>
           <li>
-            <a href="/khach-hang" class="item-link">
+            <a
+              href="/khach-hang"
+              v-tooltip="'Quản lý khách hàng'"
+              class="item-link"
+            >
               <svg
                 width="40"
                 height="29"
@@ -172,7 +176,7 @@ const isShow = ref(false);
             </a>
           </li>
           <li>
-            <a href="/web" class="item-link">
+            <a href="/web" v-tooltip="'Chats'" class="item-link">
               <svg
                 fill="none"
                 height="26"
@@ -189,7 +193,7 @@ const isShow = ref(false);
             </a>
           </li>
           <li>
-            <a href="/livestream" class="item-link">
+            <a href="/livestream" v-tooltip="'Lives'" class="item-link">
               <svg
                 width="31"
                 height="24"
@@ -225,6 +229,7 @@ const isShow = ref(false);
           <li>
             <a
               href="/quan-ly-nhan-vien-v3"
+              v-tooltip="'Nhân viên'"
               class="item-link bg-white text-moshop-color"
             >
               <svg
@@ -243,7 +248,7 @@ const isShow = ref(false);
             >
           </li>
           <li>
-            <a href="/orders/v2" class="item-link">
+            <a href="/orders/v2" v-tooltip="'Đơn hàng'" class="item-link">
               <svg
                 fill="none"
                 height="26"
@@ -290,6 +295,7 @@ const isShow = ref(false);
           <li>
             <a
               href="/web/fast-order"
+              v-tooltip="'Đăng đơn'"
               class="flex items-center h-12 px-[14px] text-[1.03rem] bg-red post-item-mobile"
             >
               <svg
