@@ -1,15 +1,15 @@
-import Vue from "vue";
-import axios from "axios";
+// import Vue from "vue";
+// import axios from "axios";
 // axios.defaults.baseURL = 'http://localhost:8000/api/v1';
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+// axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
-let token = localStorage.getItem("accessToken");
-if (token && token.length) {
-  axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
+// let token = localStorage.getItem("accessToken");
+// if (token && token.length) {
+//   axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
   // axios.defaults.headers = `Bearer ${token}`;
 
-}
+// }
 
 // axios.interceptors.response.use(
 //   function (res) {
@@ -26,6 +26,6 @@ if (token && token.length) {
 //     return Promise.reject(errors.response.data);
 //   }
 // );
-Vue.prototype.$axios = axios;
+// Vue.prototype.$axios = axios;
 
-export { axios };
+// export { axios };
