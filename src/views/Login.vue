@@ -1,44 +1,12 @@
 <script setup>
-import axios from "axios";
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { useToast } from "vue-toast-notification";
-const $toast = useToast();
-const router = useRouter();
-const username = ref("");
-const password = ref("");
+import { useUserStore } from "../stores/user";
+const useUser = useUserStore();
 const showPassword = ref(false);
 const autoForcus = ref(null);
-
-const login = async () => {
-  try {
-    const res = await axios.post(
-      "https://x.ghtk.vn/api/fulfilment/auth/login",
-      {
-        username: username.value,
-        password: password.value,
-      }
-    );
-    if (res.data.success === false) {
-      $toast.open({
-        message: res.data.message,
-        type: "error",
-        position: "top",
-      });
-    } else if (res.status === 200) {
-      localStorage.setItem("accessToken", res.data.data.access_token);
-      $toast.open({
-        message: res.data.message,
-        type: "success",
-      });
-      router.go("/");
-      // router.push({ name: "dashboard" });
-    }
-  } catch (error) {
-    console.log(error);
-  }
+const login = () => {
+  useUser.login(useUser.username, useUser.password);
 };
-
 onMounted(() => {
   autoForcus.value.focus();
 });
@@ -65,7 +33,7 @@ onMounted(() => {
                 </label>
                 <input
                   ref="autoForcus"
-                  v-model="username"
+                  v-model="useUser.username"
                   type="text"
                   name="username"
                   placeholder="Nhập tên cửa hàng"
@@ -78,14 +46,14 @@ onMounted(() => {
                   placeholder="Nhập mật khẩu"
                   type="text"
                   class="input"
-                  v-model="password"
+                  v-model="useUser.password"
                 />
                 <input
                   v-else
                   placeholder="Nhập mật khẩu"
                   type="password"
                   class="input"
-                  v-model="password"
+                  v-model="useUser.password"
                 />
 
                 <div class="field-pass flex">

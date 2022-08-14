@@ -1,25 +1,9 @@
 <script setup>
-import { useToast } from "vue-toast-notification";
 import { useStaffStore } from "../../stores/staff";
-const $toast = useToast();
 const emit = defineEmits(["closeModal"]);
 const useStaff = useStaffStore();
 const updateKpi = async () => {
   await useStaff.updateKpi();
-  if (useStaff.checkStatus) {
-    $toast.open({
-      message: useStaff.messageStatus,
-      type: "success",
-      duration: 3000,
-    });
-  } else {
-    $toast.open({
-      message: useStaff.messageStatus,
-      type: "error",
-      duration: 3000,
-    });
-  }
-
   emit("closeModal");
 };
 </script>

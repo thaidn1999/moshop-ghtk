@@ -24,11 +24,6 @@ const screenCheck = reactive({
 const changeStatusWorking = async (status) => {
   propsStaffInfo.active = status;
   await useStaff.updateStatus(propsStaffInfo.id, status);
-  $toast.open({
-    message: useStaff.messageStatus,
-    type: "success",
-    duration: 3000,
-  });
   isShow.value = false;
 };
 </script>
@@ -55,7 +50,7 @@ const changeStatusWorking = async (status) => {
                     ? 'active'
                     : 'temporary'
                 "
-                class="btn staffStatus__btn flex items-center rounded-[20px] text-[13px] px-2 py-[2px] leading-[1.25] whitespace-nowrap"
+                class="btn staffStatus__btn flex items-center mb-2 xl:mb-0 rounded-[20px] text-[13px] px-2 py-[2px] leading-[1.25] whitespace-nowrap"
               >
                 <span>{{ statusWorking[propsStaffInfo.active] }} </span>
                 <svg
@@ -130,9 +125,9 @@ const changeStatusWorking = async (status) => {
       </div>
       <div class="staffRight">
         <button
-          class="staffRight__viewButton px-[18px] rounded-[12px] text-sm text-common-green border border-common-green hover:text-white hover:bg-common-green"
+          class="staffRight__viewButton mt-2 xl:mt-0 px-[18px] rounded-[12px] text-sm text-common-green border border-common-green hover:text-white hover:bg-common-green"
         >
-          <a href="#"> Xem</a>
+          <a href="#" class="hover:text-white"> Xem</a>
         </button>
       </div>
     </div>
