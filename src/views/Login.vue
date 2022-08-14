@@ -12,8 +12,8 @@ onMounted(() => {
 });
 </script>
 <template>
-  <body class="w-screen h-screen bg-[#219653] flex justify-center items-center">
-    <div class="login">
+  <div class="login bg-[#219653] flex justify-center items-center">
+    <div>
       <div class="screen">
         <div>
           <div class="header mb-11 flex justify-center">
@@ -121,11 +121,15 @@ onMounted(() => {
         </div>
       </div>
     </div>
-  </body>
+  </div>
 </template>
 <style scoped>
-body {
-  font-size: 16px;
+.login {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 img {
   width: 214px;

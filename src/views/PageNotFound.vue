@@ -1,13 +1,11 @@
 <script setup>
 import { ref } from "vue";
-import Navbar from "../components/header/Navbar.vue";
 const isClose = ref(false);
 const close = () => {
   isClose.value = !isClose.value;
 };
 </script>
 <template>
-  <Navbar class="absolute w-full h-full" />
   <div
     v-if="!isClose"
     class="fixed top-0 left-0 z-[1000] w-full h-full overflow-x-hidden overflow-y-auto outline-0 bg-[rgba(0,0,0,0.3)]"
