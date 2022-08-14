@@ -1,28 +1,50 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import {
+  startOfToday,
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+} from "date-fns";
+import { ref } from "vue";
 import ModalKpiStaff from "./ModalKpiStaff.vue";
 import ModalFilterDate from "./ModalFilterDate.vue";
 import { useStaffStore } from "../../stores/staff";
+const date = format(startOfToday(new Date()), "yyyy-MM-dd");
+const startWeek = format(startOfWeek(new Date()), "yyyy-MM-dd");
+const endWeek = format(endOfWeek(new Date()), "yyyy-MM-dd");
+const startMonth = format(startOfMonth(new Date()), "yyyy-MM-dd");
+const endMonth = format(endOfMonth(new Date()), "yyyy-MM-dd");
 const useStaff = useStaffStore();
-const isFilterStaff = ref(false);
+const isFilterDate = ref(false);
 const isModalKpiStaff = ref(false);
 const titleBtn = ref("today");
 const getKpiStaff = () => {
   isModalKpiStaff.value = !isModalKpiStaff.value;
   useStaff.getKpiStaff();
 };
+const handleDate = (title) => {
+  titleBtn.value = title;
+  if (title === "today") {
+    useStaff.getStaff(date, date);
+  }
+  if (title === "week") {
+    useStaff.getStaff(startWeek, endWeek);
+  }
+  if (title === "month") {
+    useStaff.getStaff(startMonth, endMonth);
+  }
+};
+const changeTitle = () => {
+  titleBtn.value = "option";
+};
 const closeFilter = () => {
-  isFilterStaff.value = false;
+  isFilterDate.value = false;
 };
 const closeModal = () => {
   isModalKpiStaff.value = false;
 };
-const handleDate = (title) => {
-  titleBtn.value = title;
-};
-onMounted(() => {
-  setInterval(useStaff.getTimeLive(), 2000);
-});
 </script>
 <template>
   <div
@@ -39,7 +61,7 @@ onMounted(() => {
           <div class="ringring2"></div>
         </div>
         <div class="ml-4 lg:text-base italic">
-          Live (cập nhật {{ useStaff.hour }}:{{ useStaff.minute }} )
+          Live (cập nhật {{ useStaff.currentDate }} )
         </div>
       </div>
       <div class="option-date">
@@ -68,13 +90,19 @@ onMounted(() => {
           <button
             class="btn-filter"
             :class="titleBtn === 'option' ? 'btn-success' : ''"
-            @click="handleDate('option'), (isFilterStaff = !isFilterStaff)"
+            @click="
+              isFilterDate = !isFilterDate;
+              changeTitle;
+            "
           >
             Tùy chọn
           </button>
         </div>
-        <div v-if="isFilterStaff">
-          <ModalFilterDate @closeFilter="closeFilter" />
+        <div v-if="isFilterDate">
+          <ModalFilterDate
+            @closeFilter="closeFilter"
+            @changeTitle="changeTitle"
+          />
         </div>
       </div>
     </div>
@@ -104,14 +132,9 @@ onMounted(() => {
         </svg>
         <span>KPIs nhân viên</span>
       </button>
-      <ModalKpiStaff
-        v-show="isModalKpiStaff"
-        :kpiOnl="useStaff.kpiOnl"
-        :kpiOff="useStaff.kpiOff"
-        @closeModal="closeModal"
-      />
+      <ModalKpiStaff v-show="isModalKpiStaff" @closeModal="closeModal" />
       <button
-        href="/quan-ly-nhan-vien-v2/create"
+        href="#"
         class="btn-filter btn-success btn-utility hover:bg-[#218838] hover:border-[#1e7e34]"
       >
         <svg
@@ -159,8 +182,7 @@ onMounted(() => {
   width: 10px;
   height: 10px;
   background-color: red;
-  border-radius: 50%;
-  position: absolute;
+  border-radius: 500px;
 }
 .ringring2 {
   border: 2px solid red;

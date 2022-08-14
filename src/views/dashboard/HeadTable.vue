@@ -1,4 +1,3 @@
-<script setup></script>
 <template>
   <thead class="table-header h-[50px]">
     <tr>

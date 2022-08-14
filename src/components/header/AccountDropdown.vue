@@ -1,10 +1,9 @@
 <script setup>
-import { useRouter } from "vue-router";
 import AccountItem from "./AccountItem.vue";
-const router = useRouter();
+import { useUserStore } from "../../stores/user";
+const useUser = useUserStore();
 const logout = () => {
-  localStorage.removeItem("accessToken");
-  router.go("/login");
+  useUser.logout();
 };
 </script>
 <template>
@@ -130,11 +129,8 @@ const logout = () => {
       </a>
     </div>
 
-    <div class="dropdown-item">
-      <div
-        @click="logout"
-        class="w-100 h-100 flex items-center whitespace-nowrap"
-      >
+    <div class="dropdown-item" @click="logout">
+      <div class="w-100 h-100 flex items-center whitespace-nowrap">
         <span class="icon mr-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"

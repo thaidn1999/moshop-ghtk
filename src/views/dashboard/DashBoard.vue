@@ -1,13 +1,15 @@
 <script setup>
+import { format, startOfToday } from "date-fns";
 import { useStaffStore } from "../../stores/staff";
-import { onMounted } from "vue";
 import Navbar from "../../components/header/Navbar.vue";
 import FilterDate from "../../components/manager_staff/FilterDate.vue";
 import RowTable from "../../components/manager_staff/RowTable.vue";
 import HeadTable from "./HeadTable.vue";
+const date = format(startOfToday(new Date()), "yyyy-MM-dd");
+import { onMounted } from "vue";
 const useStaff = useStaffStore();
-onMounted(async () => {
-  await useStaff.getStaff();
+onMounted(() => {
+  setInterval(useStaff.getStaff(date, date), 300000);
 });
 </script>
 <template>
@@ -19,7 +21,7 @@ onMounted(async () => {
         <div class="page-table-staff p-0">
           <div class="table-scroll">
             <table
-              class="border-collapse border-t-0 table-auto w-full border border-borderColor-tbl text-base text-center"
+              class="border-collapse border-t-0 table-auto w-full border border-borderColor-tbl text-sm lg:text-base text-center"
             >
               <HeadTable />
               <tbody

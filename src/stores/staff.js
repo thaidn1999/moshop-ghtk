@@ -1,32 +1,36 @@
 import axios from 'axios'
+import { format } from 'date-fns'
 import { defineStore } from 'pinia'
-
-const token = localStorage.getItem('accessToken')
-
+import { useToast } from "vue-toast-notification";
+const $toast = useToast();
 export const useStaffStore = defineStore({
   id: 'staff',
   state: () => ({
     staffs: [],
-    messageStatus: '',
-    checkStatus: false,
+    token: localStorage.getItem('accessToken'),
     kpiOnl: '',
     kpiOff: '',
-    hour: '',
-    minute: ''
+    start_date: '',
+    end_date: '',
+    currentDate: new Date(),
   }),
   getters: {
-    listStaffs: (state) => state.staffs
+    listStaffs: (state) => state.staffs,
   },
   actions: {
-    async getStaff() {
+    getCurrentDate() {
+      this.currentDate = format(new Date(), 'HH:mm')
+    },
+    async getStaff(start_date, end_date) {
       try {
-        const res = await axios.get('https://x.ghtk.vn/api/v2/staff?start_date=2021-07-20&end_date=2021-07-20',
+        const res = await axios.get(`https://x.ghtk.vn/api/v2/staff?start_date=${start_date}&end_date=${end_date}`,
           {
             headers: {
-              authorization: `Bearer ${token}`
+              authorization: `Bearer ${this.token}`
             }
           })
         this.staffs = res.data.data;
+        this.getCurrentDate()
       } catch (error) {
         console.log(error);
       }
@@ -40,12 +44,21 @@ export const useStaffStore = defineStore({
           },
           {
             headers: {
-              authorization: `Bearer ${token}`
+              authorization: `Bearer ${this.token}`
             }
           })
-        this.messageStatus = res.data.message
-        this.getStaff()
+        $toast.open({
+          message: res.data.message,
+          type: "success",
+          duration: 3000,
+        });
+
       } catch (error) {
+        $toast.open({
+          message: "Cập nhật thất bại",
+          type: "error",
+          duration: 3000,
+        });
         console.log(error);
       }
     },
@@ -53,7 +66,7 @@ export const useStaffStore = defineStore({
       try {
         const res = await axios.get('https://x.ghtk.vn/api/v2/staff/get-config-message-type', {
           headers: {
-            authorization: `Bearer ${token}`
+            authorization: `Bearer ${this.token}`
           }
         })
         this.kpiOnl = res.data.data.message_type;
@@ -70,7 +83,7 @@ export const useStaffStore = defineStore({
           },
           {
             headers: {
-              authorization: `Bearer ${token}`
+              authorization: `Bearer ${this.token}`
             }
           });
         const resOff = await axios.post('https://x.ghtk.vn/api/v2/staff/update-offline-message-type',
@@ -79,39 +92,39 @@ export const useStaffStore = defineStore({
           },
           {
             headers: {
-              authorization: `Bearer ${token}`
+              authorization: `Bearer ${this.token}`
             }
           })
-        if ((resOnl.data.success === true) && (resOff.data.success === true)) {
-          this.checkStatus = true
-          this.messageStatus = resOnl.data.message
+        if ((resOnl.data.success) && (resOff.data.success)) {
+          $toast.open({
+            message: resOnl.data.message,
+            type: "success",
+            duration: 3000,
+          });
         }
         else if ((resOnl.data.success === false) && (resOff.data.success === true)) {
-          this.checkStatus = false
-          this.messageStatus = resOnl.data.message
+          $toast.open({
+            message: resOnl.data.message,
+            type: "error",
+            duration: 3000,
+          });
         }
         else {
-          this.checkStatus = false
-          this.messageStatus = resOff.data.message
+          $toast.open({
+            message: resOff.data.message,
+            type: "error",
+            duration: 3000,
+          });
+
         }
       } catch (error) {
+        $toast.open({
+          message: "Cập nhật thất bại",
+          type: "error",
+          duration: 3000,
+        });
         console.log(error);
       };
     },
-    getTimeLive() {
-      let date = new Date();
-      this.hour = date.getHours()
-      this.minute = date.getMinutes()
-      if (this.hour < 10) {
-        this.hour = '0' + this.hour
-      } else {
-        return this.hour
-      }
-      if (this.minute < 10) {
-        this.minute = '0' + this.minute
-      } else {
-        return this.minute
-      }
-    }
   }
 })
