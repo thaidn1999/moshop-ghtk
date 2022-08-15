@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import DashBoard from '../views/dashboard/DashBoard.vue'
 import PageNotFound from "../views/PageNotFound.vue"
+import PersonalInfor from '../views/personalInfo/PersonalInfor.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -17,10 +18,15 @@ const router = createRouter({
 
     },
     {
+      path: '/views',
+      name: 'views',
+      component: PersonalInfor
+    },
+    {
       path: '/:pathMatch(.*)',
       name: 'page-not-found',
       component: PageNotFound
-    }
+    },
   ]
 })
 router.beforeEach((to, from, next) => {
