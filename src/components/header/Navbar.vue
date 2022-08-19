@@ -1,16 +1,22 @@
 <script setup>
 import { ref } from "vue";
+import { useStaffStore } from "../../stores/staff";
+const useStaff = useStaffStore();
 import AccountDropdown from "./AccountDropdown.vue";
 const isShow = ref(false);
+const ReloadPage = async () => {
+  useStaff.clearStaff();
+  await useStaff.getStaff(useStaff.date, useStaff.date);
+};
 </script>
 <template>
   <div>
     <nav
       class="navbar bg-moshop-color text-white font-bold flex items-center justify-between sm:justify-start flex-wrap"
     >
-      <div class="header-logo h-12 pl-[15px]">
+      <div class="header-logo h-12 pl-[15px]" @click="ReloadPage">
         <RouterLink
-          to="/"
+          to="/home"
           class="flex py-[5px] h-full items-center text-[31px] font-bold mr-3 whitespace-nowrap hover:text-white"
         >
           moshop
@@ -232,7 +238,7 @@ const isShow = ref(false);
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
                 />
               </svg>
-              <span class="item-title hidden xl:block">Đăng đơn</span>
+              <span class="item-title hidden md:block">Đăng đơn</span>
             </a>
           </li>
         </ul>

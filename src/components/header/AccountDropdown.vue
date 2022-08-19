@@ -67,9 +67,9 @@ const logout = () => {
       <hr class="my-1" />
     </div>
     <div class="dropdown-item">
-      <a
-        href="/quan-ly-kho-va-san-pham/v2"
-        class="w-full h-full flex items-center whitespace-nowrap"
+      <RouterLink
+        to="/home"
+        class="w-full h-full flex items-center whitespace-nowrap hover:text-black"
       >
         <span class="icon mr-2">
           <svg
@@ -87,7 +87,7 @@ const logout = () => {
           </svg>
         </span>
         Quản lý kho và sản phẩm
-      </a>
+      </RouterLink>
     </div>
     <div class="dropdown-item">
       <span class="icon mr-2">
@@ -107,9 +107,9 @@ const logout = () => {
       Thông tin nhân viên
     </div>
     <div class="dropdown-item">
-      <a
-        href="/thong-tin-shop"
-        class="w-100 h-100 flex items-center whitespace-nowrap"
+      <RouterLink
+        to="/home"
+        class="w-100 h-100 flex items-center whitespace-nowrap hover:text-black"
       >
         <span class="icon mr-2">
           <svg
@@ -126,7 +126,7 @@ const logout = () => {
           </svg>
         </span>
         Quản lý tag
-      </a>
+      </RouterLink>
     </div>
 
     <div class="dropdown-item" @click="logout">
