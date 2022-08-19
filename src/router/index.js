@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../views/Login.vue'
-import DashBoard from '../views/dashboard/DashBoard.vue'
+import DashBoard from '../views/DashBoard.vue'
 import PageNotFound from "../views/PageNotFound.vue"
+import CreateStaff from '../views/CreateStaff.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -11,10 +12,14 @@ const router = createRouter({
       component: Login,
     },
     {
-      path: '/',
+      path: '/home',
       name: 'dashboard',
       component: DashBoard,
-
+    },
+    {
+      path: '/create',
+      name: "create",
+      component: CreateStaff,
     },
     {
       path: '/:pathMatch(.*)',
@@ -31,7 +36,7 @@ router.beforeEach((to, from, next) => {
     })
   } else if (to.name === 'login' && localStorage.getItem('accessToken')) {
     next({
-      path: '/',
+      path: '/home',
       replace: true
     })
   } else {

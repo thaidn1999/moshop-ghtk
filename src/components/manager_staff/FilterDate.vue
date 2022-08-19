@@ -24,16 +24,19 @@ const getKpiStaff = () => {
   isModalKpiStaff.value = !isModalKpiStaff.value;
   useStaff.getKpiStaff();
 };
-const handleDate = (title) => {
+const handleDate = async (title) => {
   titleBtn.value = title;
   if (title === "today") {
-    useStaff.getStaff(date, date);
+    useStaff.clearStaff();
+    await useStaff.getStaff(date, date);
   }
   if (title === "week") {
-    useStaff.getStaff(startWeek, endWeek);
+    useStaff.clearStaff();
+    await useStaff.getStaff(startWeek, endWeek);
   }
   if (title === "month") {
-    useStaff.getStaff(startMonth, endMonth);
+    useStaff.clearStaff();
+    await useStaff.getStaff(startMonth, endMonth);
   }
 };
 const changeTitle = () => {
@@ -133,26 +136,27 @@ const closeModal = () => {
         <span>KPIs nhân viên</span>
       </button>
       <ModalKpiStaff v-show="isModalKpiStaff" @closeModal="closeModal" />
-      <button
-        href="#"
-        class="btn-filter btn-success btn-utility hover:bg-[#218838] hover:border-[#1e7e34]"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 mr-3"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
+      <RouterLink to="/create">
+        <button
+          class="btn-filter btn-success btn-utility hover:bg-[#218838] hover:border-[#1e7e34]"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-          />
-        </svg>
-        <span>Thêm nhân viên</span>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 mr-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+          <span>Thêm nhân viên</span>
+        </button>
+      </RouterLink>
     </div>
   </div>
 </template>

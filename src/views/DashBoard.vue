@@ -1,14 +1,19 @@
 <script setup>
-import { format, startOfToday } from "date-fns";
-import { useStaffStore } from "../../stores/staff";
-import FilterDate from "../../components/manager_staff/FilterDate.vue";
-import RowTable from "../../components/manager_staff/RowTable.vue";
-import HeadTable from "./HeadTable.vue";
-const date = format(startOfToday(new Date()), "yyyy-MM-dd");
-import { onMounted } from "vue";
+import ModalNoStaff from "../components/manager_staff/ModalNoStaff.vue";
+import FilterDate from "../components/manager_staff/FilterDate.vue";
+import HeadTable from "../components/manager_staff/HeadTable.vue";
+import RowTable from "../components/manager_staff/RowTable.vue";
+import { useStaffStore } from "../stores/staff";
+import { onMounted, onUnmounted } from "vue";
 const useStaff = useStaffStore();
-onMounted(() => {
-  setInterval(useStaff.getStaff(date, date), 300000);
+onMounted(async () => {
+  await useStaff.getStaff(useStaff.date, useStaff.date);
+  setInterval(() => {
+    useStaff.getStaff(useStaff.date, useStaff.date);
+  }, 600000);
+});
+onUnmounted(() => {
+  useStaff.clearStaff();
 });
 </script>
 <template>
@@ -22,12 +27,13 @@ onMounted(() => {
           <HeadTable />
           <tbody
             class="table-body"
-            v-for="staff in useStaff.listStaffs"
+            v-for="staff in useStaff.staffs"
             :key="staff.id"
           >
             <RowTable :staff="staff" />
           </tbody>
         </table>
+        <ModalNoStaff v-show="useStaff.listStaffs.length <= 0" />
       </div>
     </div>
   </div>
