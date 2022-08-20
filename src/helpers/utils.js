@@ -1,3 +1,4 @@
+// search khong dau
 const converToNoMark = (str) =>
   str
     .normalize("NFD")
