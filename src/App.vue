@@ -1,6 +1,7 @@
 <script setup>
 import { RouterView, useRoute } from "vue-router";
 import Navbar from "./components/header/Navbar.vue";
+
 const route = useRoute();
 </script>
 <template>

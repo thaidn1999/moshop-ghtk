@@ -127,7 +127,12 @@ const changeStatusWorking = async (status) => {
         <button
           class="staffRight__viewButton mt-2 xl:mt-0 px-[18px] rounded-[12px] text-sm text-common-green border border-common-green hover:text-white hover:bg-common-green"
         >
-          <a href="#" class="hover:text-white"> Xem</a>
+          <RouterLink
+            :to="{ path: '/home/' + propsStaffInfo.id }"
+            class="hover:text-white"
+          >
+            Xem
+          </RouterLink>
         </button>
       </div>
     </div>
