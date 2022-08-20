@@ -3,6 +3,15 @@ import { defineProps, ref } from "vue";
 const { jobInfo, workAddress } = defineProps(["jobInfo", "workAddress"]);
 const showPage = ref(true);
 const numberDay = ref([0, 1, 2, 3, 4, 5, 6]);
+const screens = ref([
+  "sale",
+  "chat_ops",
+  "statistic",
+  "order",
+  "customer",
+  "product",
+  "staff",
+]);
 function mapNumberToDay(number) {
   switch (number) {
     case 0:
@@ -21,6 +30,24 @@ function mapNumberToDay(number) {
       return "Chủ nhật";
     default:
       return "Err";
+  }
+}
+function mapScreen(item) {
+  switch (item) {
+    case "sale":
+      return "Chat chốt đơn";
+    case "chat_ops":
+      return "Chat vận hành";
+    case "statistic":
+      return "Tổng quan";
+    case "order":
+      return "Đơn hàng";
+    case "customer":
+      return "Khách hàng";
+    case "product":
+      return "Kho sp";
+    case "staff":
+      return "Nhân viên";
   }
 }
 </script>
@@ -46,9 +73,11 @@ function mapNumberToDay(number) {
       </div>
     </div>
     <div class="workingTime mb-5">
-      <div class="workingTime-title">Thời gian làm việc</div>
+      <div class="workingTime-title mb-[25px] font-semibold">
+        Thời gian làm việc
+      </div>
       <div
-        class="workingTime-box pb-px mb-3.5"
+        class="workingTime-box mb-[15px]"
         v-for="(time, index) in jobInfo.work_time_repeats"
       >
         <div class="workingTimeItem mb-5 flex items-center">
@@ -63,7 +92,7 @@ function mapNumberToDay(number) {
               disabled="disabled"
               :value="time.start_time"
             />
-            <i class="time-icon">
+            <i class="time-icon mr-2 w-4 h-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4 text-[#00000080]"
@@ -90,7 +119,7 @@ function mapNumberToDay(number) {
               disabled="disabled"
               :value="time.end_time"
             />
-            <i class="time-icon">
+            <i class="time-icon mr-2 w-4 h-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4 text-[#00000080]"
@@ -127,8 +156,9 @@ function mapNumberToDay(number) {
           <input
             class="page-checkbox"
             type="checkbox"
-            v-bind:checked="showPage"
             disabled="disabled"
+            v-model="showPage"
+            :checked="jobInfo?.screens?.includes('sale')"
           />
           <span class="custom-checkmark"></span>
           <span>Chat chốt đơn</span>
@@ -143,7 +173,11 @@ function mapNumberToDay(number) {
               class="page-checkbox"
               type="checkbox"
               disabled="disabled"
-              :checked="post.noti_mode ? true : false"
+              :checked="
+                jobInfo?.pages?.employee_pages?.find(
+                  (employee_page) => employee_page.name === post.name
+                )
+              "
             />
             <span class="custom-checkmark"></span>
             <img class="rounded-full mr-2" v-bind:src="post.avatar" alt="" />
@@ -153,42 +187,72 @@ function mapNumberToDay(number) {
       </div>
       <div class="screenBox">
         <label class="checkbox-container items-center">
-          <input class="page-checkbox" type="checkbox" disabled="disabled" />
+          <input
+            class="page-checkbox"
+            type="checkbox"
+            disabled="disabled"
+            :checked="jobInfo?.screens?.includes('chat_ops')"
+          />
           <span class="custom-checkmark"></span>
           <span>Chat vận hành</span>
         </label>
       </div>
       <div class="screenBox">
         <label class="checkbox-container items-center">
-          <input class="page-checkbox" type="checkbox" disabled="disabled" />
+          <input
+            class="page-checkbox"
+            type="checkbox"
+            disabled="disabled"
+            :checked="jobInfo?.screens?.includes('statistic')"
+          />
           <span class="custom-checkmark"></span>
           <span>Tổng quan (Tổng quan shop)</span>
         </label>
       </div>
       <div class="screenBox">
         <label class="checkbox-container items-center">
-          <input class="page-checkbox" type="checkbox" disabled="disabled" />
+          <input
+            class="page-checkbox"
+            type="checkbox"
+            disabled="disabled"
+            :checked="jobInfo?.screens?.includes('order')"
+          />
           <span class="custom-checkmark"></span>
           <span>Đơn hàng (Quản lý và đăng đơn GHTK)</span>
         </label>
       </div>
       <div class="screenBox">
         <label class="checkbox-container items-center">
-          <input class="page-checkbox" type="checkbox" disabled="disabled" />
+          <input
+            class="page-checkbox"
+            type="checkbox"
+            disabled="disabled"
+            :check="jobInfo?.screens?.includes('customer')"
+          />
           <span class="custom-checkmark"></span>
           <span>Khách hàng (Quản lý và chăm sóc KH)</span>
         </label>
       </div>
       <div class="screenBox">
         <label class="checkbox-container items-center">
-          <input class="page-checkbox" type="checkbox" disabled="disabled" />
+          <input
+            class="page-checkbox"
+            type="checkbox"
+            disabled="disabled"
+            :checked="jobInfo?.screens?.includes('product')"
+          />
           <span class="custom-checkmark"></span>
           <span>Kho và sản phẩn (Quản lý sản phẩm và xuất nhập)</span>
         </label>
       </div>
       <div class="screenBox">
         <label class="checkbox-container items-center">
-          <input class="page-checkbox" type="checkbox" disabled="disabled" />
+          <input
+            class="page-checkbox"
+            type="checkbox"
+            disabled="disabled"
+            :checked="jobInfo?.screens?.includes('staff')"
+          />
           <span class="custom-checkmark"></span>
           <span>Nhân viên (Quản lý nhân viên)</span>
         </label>
@@ -204,10 +268,6 @@ function mapNumberToDay(number) {
   background-color: #efefef;
   border-radius: 4px;
 }
-.workingTime-title {
-  margin-bottom: 25px;
-  font-weight: 600;
-}
 .workingTimeItem-input {
   width: 175px;
   border: 1px solid #ced4da;
@@ -215,11 +275,6 @@ function mapNumberToDay(number) {
 .workingTimeItem-input > input {
   width: 100%;
   padding: 6px 8px 6px 10px;
-}
-.time-icon {
-  margin-right: 8px;
-  width: 16px;
-  height: 17px;
 }
 .repeatDate-item {
   padding: 2px 8px;

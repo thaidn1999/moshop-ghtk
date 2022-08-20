@@ -10,12 +10,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-<<<<<<< Updated upstream
-  },
-  server: {
-=======
-  },server: {
->>>>>>> Stashed changes
+  }
+  , server: {
     port: 3000
   }
 })

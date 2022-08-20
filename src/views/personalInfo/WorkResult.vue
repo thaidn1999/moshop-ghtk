@@ -7,7 +7,7 @@ const { workResult } = defineProps(["workResult"]);
     <div class="work-result">
       <fieldset class="mb-7">
         <legend class="wr-title">Kết quả công việc</legend>
-        <div class="filter flex flex-row">
+        <div class="filter flex flex-row mb-[15px]">
           <button>Hôm nay</button>
           <button>Tuần này</button>
           <button>Tháng này</button>
