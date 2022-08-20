@@ -1,8 +1,6 @@
 <script setup>
 import { ref, reactive } from "vue";
 import { useStaffStore } from "../../stores/staff";
-import { useToast } from "vue-toast-notification";
-const $toast = useToast();
 const useStaff = useStaffStore();
 const isShow = ref(false);
 const props = defineProps(["propsStaff"]);

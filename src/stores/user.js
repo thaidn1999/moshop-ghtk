@@ -21,7 +21,7 @@ export const useUserStore = defineStore({
         );
         if (res.data.success) {
           localStorage.setItem("accessToken", res.data.data.access_token);
-          router.push('/')
+          router.push('/home')
         }
         else {
           $toast.open({

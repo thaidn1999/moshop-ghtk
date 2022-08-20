@@ -12,7 +12,9 @@ const updateKpi = async () => {
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title m-auto text-[18px] font-bold leading-[1.5]">
+          <h5
+            class="modal-title m-auto text-[18px] text-white font-bold leading-[1.5]"
+          >
             Cài đặt KPIs nhân viên
           </h5>
           <button
@@ -136,7 +138,7 @@ const updateKpi = async () => {
   outline: 0;
 }
 .kpi-picker-modal {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1040;
 }
 .modal-dialog-centered {

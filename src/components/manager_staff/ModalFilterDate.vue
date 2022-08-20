@@ -9,7 +9,7 @@ const emit = defineEmits(["closeFilter", "changeTitle"]);
 const isDisabled = computed(() => {
   return useStaff.start_date === "" || useStaff.end_date === "";
 });
-const getDateOption = () => {
+const getDateOption = async () => {
   if (useStaff.start_date > useStaff.end_date) {
     $toast.open({
       type: "error",
@@ -18,7 +18,8 @@ const getDateOption = () => {
       duration: 3000,
     });
   } else {
-    useStaff.getStaff(
+    useStaff.clearStaff();
+    await useStaff.getStaff(
       format(useStaff.start_date.$d, "yyyy-MM-dd"),
       format(useStaff.end_date.$d, "yyyy-MM-dd")
     );

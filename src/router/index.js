@@ -12,14 +12,19 @@ const router = createRouter({
       component: Login,
     },
     {
-      path: "/home",
-      name: "dashboard",
+      path: '/home',
+      name: 'dashboard',
       component: DashBoard,
     },
     {
-      path: "/home/:id",
-      name: "views",
-      component: PersonalInfor,
+      path: '/create',
+      name: "create",
+      component: CreateStaff,
+    },
+    {
+      path: '/home/:id',
+      name: 'views',
+      component: PersonalInfor
     },
     {
       path: "/:pathMatch(.*)",
@@ -36,9 +41,9 @@ router.beforeEach((to, from, next) => {
     });
   } else if (to.name === "login" && localStorage.getItem("accessToken")) {
     next({
-      path: "/",
-      replace: true,
-    });
+      path: '/home',
+      replace: true
+    })
   } else {
     next();
   }
