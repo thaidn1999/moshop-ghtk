@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps } from "vue";
+import Status from "./Status.vue";
 const { headerInfo } = defineProps(["headerInfo"]);
 </script>
 <template>
@@ -28,27 +29,9 @@ const { headerInfo } = defineProps(["headerInfo"]);
         <h3 class="infor-name" name="tel">{{ headerInfo?.tel }}</h3>
       </div>
       <div class="infor-status flex justify-center items-center">
-        <div class="infor-status-title mr-px pr-6 font-bold">Trạng thái</div>
+        <div class="infor-status-title pr-[25px] font-bold">Trạng thái</div>
         <div class="staff-status">
-          <button class="btn-staff-status border-[#28a745] flex justify-center">
-            Đang làm việc
-            <i>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-3.5 mt-1 ml-1.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </i>
-          </button>
+          <Status :headerInfo="headerInfo" />
         </div>
       </div>
     </div>

@@ -1,37 +1,35 @@
 <script setup>
 import axios from "axios";
+import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import HeaderInfo from "./HeaderInfo.vue";
 import WorkResult from "./WorkResult.vue";
 import JobInfo from "./JobInfo.vue";
 import ActivityHistory from "./ActivityHistory.vue";
+import { format } from "date-fns";
 const info = ref([]);
 const workAddress = ref([]);
 const workResult = ref([]);
 const history = ref([]);
+const AllDate = ref([]);
 const errors = ref([]);
 const numberDay = ref([0, 1, 2, 3, 4, 5, 6]);
+const route = useRoute();
 function log(message) {
   console.log(message);
 }
-
-// function currentDateTime(datePass) {
-//   const current = new Date(datePass);
-//   console.log(Math.floor((new Date() - current) / (1000 * 60 * 60 * 24)));
-//   const day =
-//     current.getDate() < 10 ? `0${current.getDate()}` : current.getDate();
-//   const date =
-//     day + "/" + (current.getMonth() + 1) + "/" + current.getFullYear();
-//   const h = current.getHours();
-
-//   const time = h + ":" + current.getMinutes();
-//   const dateTime = time + " " + date;
-//   return dateTime;
-// }
+function groupArrayOfObjects(list, key) {
+  return list.reduce(function (rv, x) {
+    console.log(format(new Date(x[key]), "dd-MM-yyyy"));
+    (rv[format(new Date(x[key]), "dd-MM-yyyy")] =
+      rv[format(new Date(x[key]), "dd-MM-yyyy")] || []).push(x);
+    return rv;
+  }, {});
+}
 onMounted(() => {
   axios
     .get(
-      "https://x.ghtk.vn/api/v2/staff/detail?shop_user_id=611c92ce-8fe4-4b0f-bfc8-ad374bf18d55",
+      `https://x.ghtk.vn/api/v2/staff/detail?shop_user_id=${route.params.id}`,
       {
         headers: {
           authorization:
@@ -48,7 +46,7 @@ onMounted(() => {
     });
   axios
     .get(
-      `https://x.ghtk.vn/api/v2/staff/get-work-result?start_date=2021-07-20&end_date=2021-07-20&shop_user_id=611c92ce-8fe4-4b0f-bfc8-ad374bf18d55`,
+      `https://x.ghtk.vn/api/v2/staff/get-work-result?start_date=2021-07-20&end_date=2021-07-20&shop_user_id=${route.params.id}`,
       {
         headers: {
           authorization:
@@ -77,7 +75,7 @@ onMounted(() => {
     });
   axios
     .get(
-      "https://x.ghtk.vn/api/v2/staff/get-history-action?page=1&limit=30&shop_user_id=611c92ce-8fe4-4b0f-bfc8-ad374bf18d55",
+      `https://x.ghtk.vn/api/v2/staff/get-history-action?page=1&limit=30&shop_user_id=${route.params.id}`,
       {
         headers: {
           authorization:
@@ -88,15 +86,15 @@ onMounted(() => {
 
     .then((response) => {
       history.value = response.data.data;
-
-      console.log(history.value);
+      AllDate.value = groupArrayOfObjects(history.value, "time");
+      console.log(AllDate);
     });
 });
 </script>
 
 <template>
   <div>
-    <section class="text-base pt-6 pb-2.5">
+    <section class="text-base pt-6 pb-2.5 mt-[-30px]">
       <div class="wrap">
         <div>
           <HeaderInfo :headerInfo="info" />
@@ -104,11 +102,11 @@ onMounted(() => {
         <div class="main">
           <WorkResult :workResult="workResult" />
           <div class="row flex">
-            <div class="w-1/2 pr-3.5 mr-px">
+            <div class="w-1/2 pr-[15px]">
               <JobInfo :jobInfo="info" :workAddress="workAddress" />
             </div>
-            <div class="w-1/2 pl-3.5 ml-px">
-              <ActivityHistory :history="history" />
+            <div class="w-1/2 pl-[15px]">
+              <ActivityHistory :history="history" :AllDate="AllDate" />
             </div>
           </div>
         </div>
