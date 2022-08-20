@@ -7,6 +7,7 @@ import { useInfoStaffStore } from "../stores/info-staff";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import PopUpOTP from "./PopUpOTP.vue";
+import ProfileInfo from "../components/create_staff/ProfileInfo.vue";
 const $toast = useToast();
 const router = useRouter();
 const useInfoStaff = useInfoStaffStore();
@@ -96,7 +97,10 @@ onMounted(() => {
       </div>
     </div>
     <PersonalInfoVue ref="personalRef" />
-    <WorkInfo />
+    <div class="grid lg:grid-cols-2 gap-x-8">
+      <WorkInfo />
+      <ProfileInfo />
+    </div>
   </div>
 </template>
 <style scoped>

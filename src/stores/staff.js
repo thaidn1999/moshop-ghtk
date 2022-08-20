@@ -12,7 +12,7 @@ export const useStaffStore = defineStore({
     kpiOff: "",
     start_date: "",
     end_date: "",
-    currentDate: new Date(),
+    currentDate: format(new Date(), "HH:mm"),
     date: format(startOfToday(new Date()), "yyyy-MM-dd")
   }),
   getters: {
@@ -22,16 +22,14 @@ export const useStaffStore = defineStore({
     clearStaff() {
       this.staffs = [];
     },
-    getCurrentDate() {
-      this.currentDate = format(new Date(), "HH:mm");
-    },
+
     async getStaff(start_date, end_date) {
       try {
         const res = await axios.get(
           `v2/staff?start_date=${start_date}&end_date=${end_date}`
         );
+        this.currentDate
         this.staffs = res.data.data;
-        this.getCurrentDate();
       } catch (error) {
         console.log(error);
       }

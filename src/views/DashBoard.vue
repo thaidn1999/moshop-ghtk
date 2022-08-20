@@ -4,10 +4,18 @@ import FilterDate from "../components/manager_staff/FilterDate.vue";
 import HeadTable from "../components/manager_staff/HeadTable.vue";
 import RowTable from "../components/manager_staff/RowTable.vue";
 import { useStaffStore } from "../stores/staff";
-import { onMounted, onUnmounted } from "vue";
+import { onBeforeMount, onMounted, onUnmounted, ref } from "vue";
+const isLoading = ref(true);
 const useStaff = useStaffStore();
-onMounted(async () => {
+onBeforeMount(async () => {
   await useStaff.getStaff(useStaff.date, useStaff.date);
+  if (useStaff.listStaffs.length <= 0) {
+    isLoading.value = false;
+  } else {
+    isLoading.value = true;
+  }
+});
+onMounted(async () => {
   setInterval(() => {
     useStaff.getStaff(useStaff.date, useStaff.date);
   }, 600000);
@@ -33,7 +41,7 @@ onUnmounted(() => {
             <RowTable :staff="staff" />
           </tbody>
         </table>
-        <ModalNoStaff v-show="useStaff.listStaffs.length <= 0" />
+        <ModalNoStaff v-show="!isLoading" />
       </div>
     </div>
   </div>
