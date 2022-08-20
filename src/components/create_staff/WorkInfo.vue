@@ -7,6 +7,9 @@ const useInfoStaff = useInfoStaffStore();
 const handleChangeAddress = (value) => {
   useInfoStaff.formInfo.work_address = value;
 };
+const addTimeRepeat = () => {
+  // console.log(1);
+};
 onMounted(() => {
   useInfoStaff.getPages();
 });
@@ -25,120 +28,116 @@ const handleChangePage = (checkedPage) => {
 };
 </script>
 <template>
-  <div class="grid lg:grid-cols-2 gap-x-8">
-    <div class="job-info mb-5">
-      <fieldset
-        style="padding-top: 36px"
-        class="wrap-form text-base text-black"
-      >
-        <legend class="form-title">Thông tin công việc</legend>
-        <a-form :colon="false" :model="useInfoStaff.formInfo">
-          <a-form-item label="Ngày bắt đầu làm việc" name="jobTimeStart">
-            <a-date-picker
-              v-model:value="useInfoStaff.formInfo.work_first_date"
-              placeholder="Chọn ngày bắt đầu làm việc"
-            />
-          </a-form-item>
-          <a-form-item name="jobAddress" label="Nơi làm việc">
-            <a-select
-              v-model:value="useInfoStaff.formInfo.work_address"
-              show-search
-              allowClear
-              placeholder="Chọn nơi làm việc"
-              :filter-option="filterAddress"
-              style="max-width: 500px"
-              @change="handleChangeAddress"
+  <div class="job-info mb-5">
+    <fieldset style="padding-top: 36px" class="wrap-form text-base text-black">
+      <legend class="form-title">Thông tin công việc</legend>
+      <a-form :colon="false" :model="useInfoStaff.formInfo">
+        <a-form-item label="Ngày bắt đầu làm việc" name="jobTimeStart">
+          <a-date-picker
+            v-model:value="useInfoStaff.formInfo.work_first_date"
+            placeholder="Chọn ngày bắt đầu làm việc"
+          />
+        </a-form-item>
+        <a-form-item name="jobAddress" label="Nơi làm việc">
+          <a-select
+            v-model:value="useInfoStaff.formInfo.work_address"
+            show-search
+            allowClear
+            placeholder="Chọn nơi làm việc"
+            :filter-option="filterAddress"
+            style="max-width: 500px"
+            @change="handleChangeAddress"
+          >
+            <a-select-option
+              v-for="workAddress in useInfoStaff.listAddress"
+              :key="workAddress.id"
+              :value="workAddress.id"
+              :content="workAddress.address"
             >
-              <a-select-option
-                v-for="workAddress in useInfoStaff.listAddress"
-                :key="workAddress.id"
-                :value="workAddress.id"
-                :content="workAddress.address"
-              >
-                {{ workAddress.address }}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-          <a-form-item>
-            <!-- work - time -->
-            <div class="workingTime">
-              <div class="workingTime__title font-medium text-base mb-6">
-                Thời gian làm việc
-              </div>
-              <TimeRepeat />
-              <div class="workingTime__action">
-                <button
-                  class="flex items-center rounded-sm text-[#28a745] border-[#28a745] hover:text-white hover:bg-[#28a745] hover:border-[#28a745] font-medium py-2 px-[22px]"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
-                  Thêm thời gian
-                </button>
-              </div>
+              {{ workAddress.address }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item>
+          <!-- work - time -->
+          <div class="workingTime">
+            <div class="workingTime__title font-medium text-base mb-6">
+              Thời gian làm việc
             </div>
-          </a-form-item>
-          <a-form-item>
-            <div class="workingPage">
-              <div class="workingPage__title font-medium text-base mb-5">
-                Màn hình được sử dụng
-              </div>
-              <a-checkbox-group @change="handleChange" name="checkboxgroup">
-                <a-checkbox value="sale"> Chats chốt đơn </a-checkbox>
-                <a-checkbox-group
-                  v-show="isChecked"
-                  class="listPages"
-                  @change="handleChangePage"
-                  name="checkboxgroup2"
+            <TimeRepeat />
+            <div class="workingTime__action">
+              <button
+                @click="addTimeRepeat"
+                class="flex items-center rounded-sm text-[#28a745] border-[#28a745] hover:text-white hover:bg-[#28a745] hover:border-[#28a745] font-medium py-2 px-[22px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
                 >
-                  <a-checkbox
-                    v-for="(page, index) in useInfoStaff.listPages"
-                    :key="index"
-                    :value="page.pid"
-                  >
-                    <div class="flex items-center">
-                      <img
-                        :src="page.avatar"
-                        alt="avatar"
-                        class="w-[24px] h-[24px] rounded-[50%] mr-2"
-                      />
-                      <span>{{ page.name }}</span>
-                    </div>
-                  </a-checkbox>
-                </a-checkbox-group>
-                <a-checkbox value="chat_ops"> Chats vận hành</a-checkbox>
-                <a-checkbox value="statistic">
-                  Tổng quan (Tổng quan shop)
-                </a-checkbox>
-                <a-checkbox value="order">
-                  Đơn hàng (Quản lý và đăng đơn GHTK)
-                </a-checkbox>
-                <a-checkbox value="customer">
-                  Khách hàng (Quản lý và chăm sóc khách hàng)</a-checkbox
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+                Thêm thời gian
+              </button>
+            </div>
+          </div>
+        </a-form-item>
+        <a-form-item>
+          <div class="workingPage">
+            <div class="workingPage__title font-medium text-base mb-5">
+              Màn hình được sử dụng
+            </div>
+            <a-checkbox-group @change="handleChange" name="checkboxgroup">
+              <a-checkbox value="sale"> Chats chốt đơn </a-checkbox>
+              <a-checkbox-group
+                v-show="isChecked"
+                class="listPages"
+                @change="handleChangePage"
+                name="checkboxgroup2"
+              >
+                <a-checkbox
+                  v-for="(page, index) in useInfoStaff.listPages"
+                  :key="index"
+                  :value="page.pid"
                 >
-                <a-checkbox value="product">
-                  Nhân viên (Quản lý nhân viên)
-                </a-checkbox>
-                <a-checkbox value="staff">
-                  Kho và sản phẩm (Quản lý sản phẩm và xuất nhập)
+                  <div class="flex items-center">
+                    <img
+                      :src="page.avatar"
+                      alt="avatar"
+                      class="w-[24px] h-[24px] rounded-[50%] mr-2"
+                    />
+                    <span>{{ page.name }}</span>
+                  </div>
                 </a-checkbox>
               </a-checkbox-group>
-            </div>
-          </a-form-item>
-        </a-form>
-      </fieldset>
-    </div>
+              <a-checkbox value="chat_ops"> Chats vận hành</a-checkbox>
+              <a-checkbox value="statistic">
+                Tổng quan (Tổng quan shop)
+              </a-checkbox>
+              <a-checkbox value="order">
+                Đơn hàng (Quản lý và đăng đơn GHTK)
+              </a-checkbox>
+              <a-checkbox value="customer">
+                Khách hàng (Quản lý và chăm sóc khách hàng)</a-checkbox
+              >
+              <a-checkbox value="product">
+                Nhân viên (Quản lý nhân viên)
+              </a-checkbox>
+              <a-checkbox value="staff">
+                Kho và sản phẩm (Quản lý sản phẩm và xuất nhập)
+              </a-checkbox>
+            </a-checkbox-group>
+          </div>
+        </a-form-item>
+      </a-form>
+    </fieldset>
   </div>
 </template>
 <style scoped>
