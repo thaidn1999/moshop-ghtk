@@ -8,7 +8,17 @@ const handleChangeAddress = (value) => {
   useInfoStaff.formInfo.work_address = value;
 };
 const addTimeRepeat = () => {
-  // console.log(1);
+  let id = 1;
+  if (timeWorking.value.length > 1) {
+    const lastIndex = timeWorking.value[timeWorking.value.length - 1];
+    id = lastIndex.id + 1;
+  }
+  timeWorking.value.push({
+    id,
+    start_time: null,
+    end_time: null,
+    repeatsWait: [],
+  });
 };
 onMounted(() => {
   useInfoStaff.getPages();
@@ -25,6 +35,13 @@ const handleChange = (checkedScreen) => {
 };
 const handleChangePage = (checkedPage) => {
   useInfoStaff.formInfo.pages = checkedPage;
+};
+const onDelete = (index) => {
+  timeWorking.value.splice(index, 1);
+};
+const timeWorking = ref([]);
+const onChangeTime = (index, timeWait) => {
+  timeWorking.value[index] = timeWait;
 };
 </script>
 <template>
@@ -64,7 +81,16 @@ const handleChangePage = (checkedPage) => {
             <div class="workingTime__title font-medium text-base mb-6">
               Thời gian làm việc
             </div>
-            <TimeRepeat />
+            <template v-if="timeWorking.length">
+              <TimeRepeat
+                v-for="(time, index) in timeWorking"
+                :key="time.id"
+                :time="time"
+                :index="index"
+                @onDelete="onDelete"
+                @onChangeTime="onChangeTime"
+              />
+            </template>
             <div class="workingTime__action">
               <button
                 @click="addTimeRepeat"

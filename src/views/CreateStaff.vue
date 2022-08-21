@@ -3,7 +3,7 @@ import { useToast } from "vue-toast-notification";
 import PersonalInfoVue from "../components/create_staff/PersonalInfo.vue";
 import WorkInfo from "../components/create_staff/WorkInfo.vue";
 import { useInfoStaffStore } from "../stores/info-staff";
-// import { format } from "date-fns";
+import { format } from "date-fns";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import PopUpOTP from "./PopUpOTP.vue";
@@ -44,9 +44,9 @@ const addStaff = async () => {
     "-",
     useInfoStaff.formInfo.live_address,
     "-",
-    useInfoStaff.formInfo.birthday,
+    format(useInfoStaff.formInfo.birthday.$d, "yyyy-MM-dd"),
     "-",
-    useInfoStaff.formInfo.work_first_date,
+    format(useInfoStaff.formInfo.work_first_date.$d, "yyyy-MM-dd"),
     "-",
     useInfoStaff.formInfo.screens,
     "-",
