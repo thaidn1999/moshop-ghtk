@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect } from "vue";
+import { onMounted, reactive, ref, watchEffect } from "vue";
 import { useToast } from "vue-toast-notification";
 import { useInfoStaffStore } from "../../stores/info-staff";
 const useInfoStaff = useInfoStaffStore();
@@ -14,6 +14,11 @@ const dateOptions = [
   "Thứ 7",
   "Chủ Nhật",
 ];
+const propTime = defineProps(["time", "index"]);
+const emit = defineEmits(["onDelete"]);
+const deleteTime = () => {
+  emit("onDelete", propTime.index);
+};
 // watchEffect(() => {
 //   if (start_time.value > end_time.value) {
 //     $toast.open({
@@ -27,30 +32,47 @@ const dateOptions = [
 // });
 const handleTimeRepeats = (handleVal) => {
   repeatsWait.value = handleVal;
-  useInfoStaff.formInfo.repeats = Object.keys(repeatsWait.value);
+  const arr = Object.keys(repeatsWait.value);
+  useInfoStaff.formInfo.repeats = arr.map(Number);
   console.log(useInfoStaff.formInfo.repeats);
 };
+
+const timeWait = ref({
+  start_time: null,
+  end_time: null,
+  repeatsWait: [],
+});
+const onInput = () => {
+  emit("onChangeTime", propTime.index, timeWait);
+};
+onMounted(() => {
+  timeWait.value = propTime.time;
+});
 </script>
 
 <template>
   <div class="mb-4 text-base text-black">
     <a-space>
-      <div class="xl:mr-3">1. Từ</div>
+      <div class="xl:mr-3">{{ propTime.index + 1 }}. Từ</div>
       <a-time-picker
-        v-model:value="useInfoStaff.formInfo.start_time"
+        v-model:value="timeWait.start_time"
         value-format="HH:mm:ss"
         placeholder="Chọn thời gian"
+        @input="onInput"
       />
       <div class="xl:mx-3">đến</div>
       <a-time-picker
-        v-model:value="useInfoStaff.formInfo.end_time"
+        v-model:value="timeWait.end_time"
         placeholder="Chọn thời gian"
         value-format="HH:mm:ss"
+        @input="onInput"
       />
-      <div class="xl:ml-16 text-[#eb5757] cursor-pointer">Xóa</div>
+      <div class="xl:ml-16 text-[#eb5757] cursor-pointer" @click="deleteTime">
+        Xóa
+      </div>
     </a-space>
     <a-checkbox-group
-      v-model:value="repeatsWait"
+      v-model:value="timeWait.repeatsWait"
       :options="dateOptions"
       @change="handleTimeRepeats"
       name="checkboxgroup"
