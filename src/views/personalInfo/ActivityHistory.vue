@@ -50,11 +50,10 @@ function currentDateTime(datePass) {
     </div>
     <div class="logList">
       <div class="logList-perDay" v-for="perDay in AllDate">
-        {{ log(perDay) }}
         <div class="perDay-title mb-[15px] font-medium">
           {{ differenceInCalendarDays(new Date(), new Date(perDay[0].time)) }}
           ngày trước -
-          {{ format(new Date(perDay[0].time), "	EEEE", { locale: viLocale }) }},
+          {{ format(new Date(perDay[0].time), " EEEE", { locale: viLocale }) }},
           ngày
           {{ format(new Date(perDay[0].time), "dd/MM/yyyy") }}
         </div>

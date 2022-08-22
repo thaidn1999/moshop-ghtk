@@ -33,6 +33,7 @@ const onInput = () => {
 };
 onMounted(() => {
   timeWait.value = propTime.time;
+  console.log(timeWait.start_time);
 });
 </script>
 
