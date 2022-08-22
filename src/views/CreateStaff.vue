@@ -34,39 +34,6 @@ const addStaff = async () => {
   if (useInfoStaff.isSuccess) {
     isPopUp.value = true;
   }
-  // console.log(
-  //   useInfoStaff.formInfo.avatar,
-  //   "-",
-  //   useInfoStaff.formInfo.fullname,
-  //   "-",
-  //   useInfoStaff.formInfo.tel,
-  //   "-",
-  //   useInfoStaff.formInfo.password,
-  //   "-",
-  //   useInfoStaff.formInfo.work_address,
-  //   "-",
-  //   useInfoStaff.formInfo.live_address,
-  //   "-",
-  //   format(useInfoStaff.formInfo.birthday.$d, "yyyy-MM-dd"),
-  //   "-",
-  //   format(useInfoStaff.formInfo.work_first_date.$d, "yyyy-MM-dd"),
-  //   "-",
-  //   useInfoStaff.formInfo.screens,
-  //   "-",
-  //   useInfoStaff.formInfo.pages,
-  //   "-",
-  //   useInfoStaff.formInfo.repeats,
-  //   "-",
-  //   useInfoStaff.formInfo.cmnd_images,
-  //   "-",
-  //   useInfoStaff.formInfo.syll_images,
-  //   "-",
-  //   useInfoStaff.formInfo.hdld_images,
-  //   "-",
-  //   useInfoStaff.formInfo.start_time,
-  //   "-",
-  //   useInfoStaff.formInfo.end_time
-  // );
 };
 onMounted(() => {
   useInfoStaff.getListAddress();
