@@ -4,6 +4,7 @@ import { useStaffStore } from "../../stores/staff";
 const useStaff = useStaffStore();
 import AccountDropdown from "./AccountDropdown.vue";
 const isShow = ref(false);
+const username = localStorage.getItem("userName");
 const ReloadPage = async () => {
   useStaff.clearStaff();
   await useStaff.getStaff(useStaff.date, useStaff.date);
@@ -41,10 +42,10 @@ const ReloadPage = async () => {
                 class="h-[22px] px-1 py-[3px] flex items-center border-l-[3px] border-solid border-white"
               >
                 <div
-                  v-tooltip="'hncp7@gmail.com'"
+                  v-tooltip="`${username}`"
                   class="max-w-[186px] px-2 overflow-hidden text-ellipsis text-[17px]"
                 >
-                  hncp7@gmail.com
+                  {{ username }}
                 </div>
                 <div class="w-[14px]">
                   <svg
