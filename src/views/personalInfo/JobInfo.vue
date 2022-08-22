@@ -1,6 +1,10 @@
 <script setup>
 import { defineProps, ref } from "vue";
-const { jobInfo, workAddress } = defineProps(["jobInfo", "workAddress"]);
+const { jobInfo, workAddress, pages } = defineProps([
+  "jobInfo",
+  "workAddress",
+  "pages",
+]);
 const showPage = ref(true);
 const numberDay = ref([0, 1, 2, 3, 4, 5, 6]);
 const screens = ref([
@@ -163,11 +167,7 @@ function mapScreen(item) {
           <span class="custom-checkmark"></span>
           <span>Chat chốt đơn</span>
         </label>
-        <div
-          class="pageBox"
-          v-show="showPage"
-          v-for="post of jobInfo.pages?.shop_pages"
-        >
+        <div class="pageBox" v-show="showPage" v-for="post of pages?.pages">
           <label class="checkbox-container items-center">
             <input
               class="page-checkbox"

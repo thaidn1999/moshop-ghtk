@@ -36,7 +36,6 @@ function currentDateTime(datePass) {
       ? `0${current.getMinutes()}`
       : current.getMinutes();
   const date = day + "/" + month + "/" + year;
-  // (current.getMonth() + 1)
   const time = h + ":" + m;
   const dateTime = time + " " + date;
 
