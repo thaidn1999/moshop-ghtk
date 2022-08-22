@@ -21,6 +21,7 @@ export const useUserStore = defineStore({
         );
         if (res.data.success) {
           localStorage.setItem("accessToken", res.data.data.access_token);
+          localStorage.setItem("userName", res.data.data.shop.username);
           router.push('/home')
         }
         else {
@@ -37,6 +38,7 @@ export const useUserStore = defineStore({
       }
     },
     async logout() {
+      localStorage.removeItem("userName");
       localStorage.removeItem("accessToken");
       router.push("/login");
     }
