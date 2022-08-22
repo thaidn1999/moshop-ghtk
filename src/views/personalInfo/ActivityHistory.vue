@@ -11,13 +11,7 @@ import {
   differenceInCalendarDays,
   fromUnixTime,
 } from "date-fns";
-
-function log(mes) {
-  console.log("date test", mes);
-}
 const result = fromUnixTime(1330515905);
-console.log(result);
-
 function currentDateTime(datePass) {
   const current = new Date(datePass);
   const per = Math.floor((new Date() - current) / (1000 * 60 * 60 * 24));
@@ -36,7 +30,6 @@ function currentDateTime(datePass) {
       ? `0${current.getMinutes()}`
       : current.getMinutes();
   const date = day + "/" + month + "/" + year;
-  // (current.getMonth() + 1)
   const time = h + ":" + m;
   const dateTime = time + " " + date;
 
@@ -45,7 +38,6 @@ function currentDateTime(datePass) {
     per,
   };
 }
-console.log(history);
 </script>
 <template>
   <fieldset class="history">

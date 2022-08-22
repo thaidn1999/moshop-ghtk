@@ -36,10 +36,10 @@ const handleChange = (checkedScreen) => {
 const handleChangePage = (checkedPage) => {
   useInfoStaff.formInfo.pages = checkedPage;
 };
+const timeWorking = ref([]);
 const onDelete = (index) => {
   timeWorking.value.splice(index, 1);
 };
-const timeWorking = ref([]);
 const onChangeTime = (index, timeWait) => {
   timeWorking.value[index] = timeWait;
 };

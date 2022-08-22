@@ -13,14 +13,11 @@ const workResult = ref([]);
 const history = ref([]);
 const AllDate = ref([]);
 const errors = ref([]);
-const numberDay = ref([0, 1, 2, 3, 4, 5, 6]);
+const pages = ref([]);
 const route = useRoute();
-function log(message) {
-  console.log(message);
-}
+
 function groupArrayOfObjects(list, key) {
   return list.reduce(function (rv, x) {
-    console.log(format(new Date(x[key]), "dd-MM-yyyy"));
     (rv[format(new Date(x[key]), "dd-MM-yyyy")] =
       rv[format(new Date(x[key]), "dd-MM-yyyy")] || []).push(x);
     return rv;
@@ -38,7 +35,6 @@ onMounted(() => {
       }
     )
     .then((response) => {
-      console.log(response);
       info.value = response.data.data;
     })
     .catch((e) => {
@@ -56,7 +52,6 @@ onMounted(() => {
     )
     .then((response) => {
       workResult.value = response.data.data;
-      // console.log(response);
     })
     .catch((e) => {
       errors.value.push(e);
@@ -69,9 +64,7 @@ onMounted(() => {
       },
     })
     .then((response) => {
-      console.log(response);
       workAddress.value = response.data.data;
-      console.log(workAddress.value);
     });
   axios
     .get(
@@ -83,11 +76,18 @@ onMounted(() => {
         },
       }
     )
-
     .then((response) => {
       history.value = response.data.data;
       AllDate.value = groupArrayOfObjects(history.value, "time");
-      console.log(AllDate);
+    });
+  axios
+    .get(`https://wh.ghtk.vn/api/v3/page/get-all-page-by-shop-code`, {
+      headers: {
+        Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC93aC5naHRrLnZuXC9hcGlcL3YxXC9jaGVjay1zaG9wLWhhcy1wYWdlIiwiaWF0IjoxNjI2NzU5NDU5LCJleHAiOjE2MjczNjQyNTksIm5iZiI6MTYyNjc1OTQ1OSwianRpIjoiaUJES05HM2M5ZXJjb0RaeSIsInN1YiI6MzI5ODgsInBydiI6ImM4ZWUxZmM4OWU3NzVlYzRjNzM4NjY3ZTViZTE3YTU5MGI2ZDQwZmMiLCJtb190ZWwiOiI4NDM1NjI2MjEyMSIsIm1vX3VzZXJuYW1lIjoiaG5jcDdAZ21haWwuY29tIiwibW9fcm9sZSI6ImFkbWluIn0.bYRqpi3W6qqTUV5uqpgoRXa_5jLfrGCtttC0hND_3IE`,
+      },
+    })
+    .then((response) => {
+      pages.value = response.data.data;
     });
 });
 </script>
@@ -103,7 +103,11 @@ onMounted(() => {
           <WorkResult :workResult="workResult" />
           <div class="row flex">
             <div class="w-1/2 pr-[15px]">
-              <JobInfo :jobInfo="info" :workAddress="workAddress" />
+              <JobInfo
+                :jobInfo="info"
+                :workAddress="workAddress"
+                :pages="pages"
+              />
             </div>
             <div class="w-1/2 pl-[15px]">
               <ActivityHistory :history="history" :AllDate="AllDate" />
