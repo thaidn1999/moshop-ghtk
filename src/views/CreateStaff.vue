@@ -3,7 +3,6 @@ import { useToast } from "vue-toast-notification";
 import PersonalInfoVue from "../components/create_staff/PersonalInfo.vue";
 import WorkInfo from "../components/create_staff/WorkInfo.vue";
 import { useInfoStaffStore } from "../stores/info-staff";
-import { format } from "date-fns";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import PopUpOTP from "./PopUpOTP.vue";
@@ -31,34 +30,43 @@ const addStaff = async () => {
     });
     return;
   }
-  console.log(
-    useInfoStaff.formInfo.avatar,
-    "-",
-    useInfoStaff.formInfo.fullname,
-    "-",
-    useInfoStaff.formInfo.tel,
-    "-",
-    useInfoStaff.formInfo.password,
-    "-",
-    useInfoStaff.formInfo.work_address,
-    "-",
-    useInfoStaff.formInfo.live_address,
-    "-",
-    format(useInfoStaff.formInfo.birthday.$d, "yyyy-MM-dd"),
-    "-",
-    format(useInfoStaff.formInfo.work_first_date.$d, "yyyy-MM-dd"),
-    "-",
-    useInfoStaff.formInfo.screens,
-    "-",
-    useInfoStaff.formInfo.pages,
-    "-",
-    useInfoStaff.formInfo.repeats,
-    "-",
-    useInfoStaff.formInfo.start_time,
-    "-",
-    useInfoStaff.formInfo.end_time
-  );
-  isPopUp.value = true;
+  await useInfoStaff.addNewStaff();
+  if (useInfoStaff.isSuccess) {
+    isPopUp.value = true;
+  }
+  // console.log(
+  //   useInfoStaff.formInfo.avatar,
+  //   "-",
+  //   useInfoStaff.formInfo.fullname,
+  //   "-",
+  //   useInfoStaff.formInfo.tel,
+  //   "-",
+  //   useInfoStaff.formInfo.password,
+  //   "-",
+  //   useInfoStaff.formInfo.work_address,
+  //   "-",
+  //   useInfoStaff.formInfo.live_address,
+  //   "-",
+  //   format(useInfoStaff.formInfo.birthday.$d, "yyyy-MM-dd"),
+  //   "-",
+  //   format(useInfoStaff.formInfo.work_first_date.$d, "yyyy-MM-dd"),
+  //   "-",
+  //   useInfoStaff.formInfo.screens,
+  //   "-",
+  //   useInfoStaff.formInfo.pages,
+  //   "-",
+  //   useInfoStaff.formInfo.repeats,
+  //   "-",
+  //   useInfoStaff.formInfo.cmnd_images,
+  //   "-",
+  //   useInfoStaff.formInfo.syll_images,
+  //   "-",
+  //   useInfoStaff.formInfo.hdld_images,
+  //   "-",
+  //   useInfoStaff.formInfo.start_time,
+  //   "-",
+  //   useInfoStaff.formInfo.end_time
+  // );
 };
 onMounted(() => {
   useInfoStaff.getListAddress();

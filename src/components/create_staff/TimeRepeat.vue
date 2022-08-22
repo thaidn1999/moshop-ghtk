@@ -1,9 +1,7 @@
 <script setup>
-import { onMounted, reactive, ref, watchEffect } from "vue";
-import { useToast } from "vue-toast-notification";
+import { onMounted, ref } from "vue";
 import { useInfoStaffStore } from "../../stores/info-staff";
 const useInfoStaff = useInfoStaffStore();
-const $toast = useToast();
 const repeatsWait = ref([]);
 const dateOptions = [
   "Thứ 2",
@@ -19,22 +17,10 @@ const emit = defineEmits(["onDelete"]);
 const deleteTime = () => {
   emit("onDelete", propTime.index);
 };
-// watchEffect(() => {
-//   if (start_time.value > end_time.value) {
-//     $toast.open({
-//       message: "Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc!",
-//       type: "error",
-//       position: "bottom",
-//       duration: 3000,
-//     });
-//     return;
-//   }
-// });
 const handleTimeRepeats = (handleVal) => {
   repeatsWait.value = handleVal;
   const arr = Object.keys(repeatsWait.value);
   useInfoStaff.formInfo.repeats = arr.map(Number);
-  console.log(useInfoStaff.formInfo.repeats);
 };
 
 const timeWait = ref({

@@ -71,7 +71,11 @@ defineExpose({
           <div class="flex">
             <div class="relative">
               <img
-                :src="useInfoStaff.formInfo.avatar"
+                :src="
+                  useInfoStaff.formInfo.avatar
+                    ? useInfoStaff.formInfo.avatar
+                    : 'https://moshop.com.vn/default-avatar.jpg'
+                "
                 alt=""
                 class="w-[148px] h-[148px] rounded-[50%] object-cover lg:max-w-fit lg:w-[148px]"
               />
