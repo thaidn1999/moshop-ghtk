@@ -1,16 +1,8 @@
 <script setup>
 import { format } from "date-fns";
 import viLocale from "date-fns/locale/vi";
-import { defineProps, ref } from "vue";
 const { history, AllDate } = defineProps(["history", "AllDate"]);
-const date = ref([]);
-import {
-  formatDistance,
-  subDays,
-  formatDistanceToNow,
-  differenceInCalendarDays,
-  fromUnixTime,
-} from "date-fns";
+import { differenceInCalendarDays, fromUnixTime } from "date-fns";
 const result = fromUnixTime(1330515905);
 function currentDateTime(datePass) {
   const current = new Date(datePass);

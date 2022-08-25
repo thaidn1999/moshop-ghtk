@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 const { jobInfo, workAddress, pages } = defineProps([
   "jobInfo",
   "workAddress",
