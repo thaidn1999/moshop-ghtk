@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from "vue";
 import Status from "./Status.vue";
 const { headerInfo } = defineProps(["headerInfo"]);
 </script>
